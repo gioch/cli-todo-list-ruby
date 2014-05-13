@@ -1,5 +1,4 @@
 require './Controllers/CommandController'
-require './Controllers/UserController'
 require './Controllers/PrinterController'
 
 require 'yaml'
