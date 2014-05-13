@@ -3,13 +3,13 @@ module Controllers
 	class PrinterController
 
 		def self.wellcome
-			p '+----------------------------------------------------+'
-			p '| Wellcome                                           |'
-			p '+----------------------------------------------------+'
+			puts '+----------------------------------------------------+'
+			puts '| Wellcome                                           |'
+			puts '+----------------------------------------------------+'
 		end
 
 		def self.label label
-			p "Type your #{label} :"
+			puts "Type your #{label} :"
 		end
 	end
 

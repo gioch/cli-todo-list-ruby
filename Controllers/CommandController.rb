@@ -14,24 +14,24 @@ module Controllers
 			case @command
 				when 'login' 
 					if AuthController.check?
-						p 'User allready logged in' 
+						puts "logged user id is " + AuthController.get_auth_user
 					else
 						PrinterController.label 'username'
 						username = gets.chomp
 						PrinterController.label 'password'
 						password = gets.chomp
 
-						AuthController.login username, password 
+						AuthController.login username, password
 					end
 
 				when 'create'
-					p 'user created'
+					puts 'user created'
 
 				when 'logout'
-					p 'User logged out'
+					AuthController.logout
 
 				when 'tasks'
-					p 'All Tasks'
+					puts 'All Tasks'
 			end
 		end
 	end
