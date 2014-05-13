@@ -1,8 +1,11 @@
+require './Controllers/AuthController'
+require './Controllers/PrinterController'
+
 module Controllers
 
 	class CommandController
 
-		attr_accessor :command
+		attr_accessor :command 
 
 		def listen
 
@@ -10,10 +13,19 @@ module Controllers
 
 			case @command
 				when 'login' 
-					p 'User logged in'
+					if AuthController.check?
+						p 'User allready logged in' 
+					else
+						PrinterController.label 'username'
+						username = gets.chomp
+						PrinterController.label 'password'
+						password = gets.chomp
+
+						AuthController.login username, password 
+					end
 
 				when 'create'
-					p 'New user created'
+					p 'user created'
 
 				when 'logout'
 					p 'User logged out'

@@ -2,10 +2,14 @@ module Controllers
 
 	class PrinterController
 
-		def wellcome
+		def self.wellcome
 			p '+----------------------------------------------------+'
 			p '| Wellcome                                           |'
 			p '+----------------------------------------------------+'
+		end
+
+		def self.label label
+			p "Type your #{label} :"
 		end
 	end
 
