@@ -13,7 +13,7 @@ module Controllers
 		end
 
 		def self.login username, password
-			IOController.create_session  username, password
+			IOController.create_session username, password
 		end
 
 		def self.logout

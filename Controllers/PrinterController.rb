@@ -11,6 +11,14 @@ module Controllers
 		def self.label label
 			puts "Type your #{label} :"
 		end
+
+		def self.login
+			puts "Login To Account:"
+		end
+
+		def self.create_account
+			puts "Create Account:"
+		end
 	end
 
 end

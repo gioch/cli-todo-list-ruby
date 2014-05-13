@@ -5,7 +5,7 @@ module Controllers
 	class IOController
 
 		def self.user_exists? username, password
-
+			
 		end
 
 		def self.create_session username, password
