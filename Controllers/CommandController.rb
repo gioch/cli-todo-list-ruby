@@ -9,7 +9,7 @@ module Controllers
 
 		def listen
 
-			@command = gets.chomp
+			@command = get_command
 
 			case @command
 				when 'login' 
@@ -18,9 +18,9 @@ module Controllers
 					else
 						PrinterController.login
 						PrinterController.label 'username'
-						username = gets.chomp
+						username = get_command
 						PrinterController.label 'password'
-						password = gets.chomp
+						password = get_command
 
 						AuthController.login username, password
 					end
@@ -28,9 +28,9 @@ module Controllers
 				when 'create'
 					PrinterController.create_account
 					PrinterController.label 'username'
-					username = gets.chomp
+					username = get_command
 					PrinterController.label 'password'
-					password = gets.chomp
+					password = get_command
 
 					# check if user is unique.
 					# if is -> add to users yaml, create session and return generated user_id
@@ -42,6 +42,10 @@ module Controllers
 				when 'tasks'
 					puts 'All Tasks'
 			end
+		end
+
+		def get_command
+			gets.chomp
 		end
 	end
 
