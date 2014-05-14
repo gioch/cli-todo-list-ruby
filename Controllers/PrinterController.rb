@@ -26,7 +26,7 @@ module Controllers
 
 		def self.create_account
 			puts '+----------------------------------------------------+'
-			puts '| Create Account:          						   |'
+			puts '| Create Account:                                    |'
 			puts '+----------------------------------------------------+'
 		end
 
@@ -65,7 +65,7 @@ module Controllers
 			puts "+---------- User Tasks ----------+\n\n\n"
 
 			tasks_array.each do |task|
-				puts " #{task[:id]} - #{task[:title]} - #{task[:due_date]} \n\n"
+				puts " #{task[:id]} - #{task[:title]} - #{task[:due_date]} \n\n\n"
 			end
 
 			puts "+-------------------------------+"
