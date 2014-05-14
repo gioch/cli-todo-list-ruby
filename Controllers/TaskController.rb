@@ -12,6 +12,11 @@ module Controllers
 			IOController.new_task title, estimation
 		end
 
+		def self.delete_task task_id
+			IOController.delete_task task_id
+		end
+
+
 	end
 
 end

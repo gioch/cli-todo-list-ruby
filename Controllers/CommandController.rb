@@ -11,18 +11,18 @@ module Controllers
 
 		def listen
 
-			@command = get_command
+			@command = get_input_value
 
 			case @command
 				when 'login' 
 					if AuthController.check?
-						puts "logged user id is " + AuthController.get_auth_user.to_s
+						PrinterController.user_logged
 					else
 						PrinterController.login
 						PrinterController.label 'username'
-						username = get_command
+						username = get_input_value
 						PrinterController.label 'password'
-						password = get_command
+						password = get_input_value
 
 						if AuthController.login? username, password
 							PrinterController.admin_wellcome
@@ -34,9 +34,9 @@ module Controllers
 				when 'create'
 					PrinterController.create_account
 					PrinterController.label 'username'
-					username = get_command
+					username = get_input_value
 					PrinterController.label 'password'
-					password = get_command
+					password = get_input_value
 
 					if UserController.unique? username
 						UserController.create_user username, password
@@ -53,26 +53,33 @@ module Controllers
 					AuthController.logout
 
 				when 'tasks'
-					puts "User Tasks\n\n"
+					PrinterController.tasks
 
 					user_tasks = UserController.tasks
 
 					PrinterController.show_tasks user_tasks
 
-
 				when 'add'
-					puts "Add New Task\n\n"
-					puts "Task Title"
-					task_title = get_command
+					PrinterController.add_task
+					PrinterController.label "Task Title"
+					task_title = get_input_value
 
-					puts "How many days you need to finish?"
-					task_estimation_time = get_command
+					PrinterController.label "days you need to finish?"
+					task_estimation_time = get_input_value
 
 					TaskController.create_new_task task_title, task_estimation_time
+
+				when 'delete'
+					PrinterController.label "Task Id To Delete"
+					task_id = get_input_value
+					task_id = task_id.to_i
+
+					TaskController.delete_task task_id
+ 
 			end
 		end
 
-		def get_command
+		def get_input_value
 			gets.chomp
 		end
 	end

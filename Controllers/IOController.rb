@@ -162,6 +162,33 @@ module Controllers
 			new_task_id
 		end
 
+		def self.delete_task task_id
+			all_tasks = []
+			index = 0
+			exists = false
+
+			if File.file?('./tasks.yml')
+				File.open('./tasks.yml', 'r') do |file|
+					all_tasks = YAML.load(file)
+				end
+
+				all_tasks.each do |task|
+					if task[:id] == task_id
+						exists = true
+						break
+					end
+					index += 1
+				end
+
+				all_tasks.slice!(index)
+
+				File.open('./tasks.yml', 'w') do |tasks|
+					tasks.puts all_tasks.to_yaml
+				end
+			end
+			
+		end
+
 		def self.destroy_session
 			File.delete('./session.yml')
 		end
