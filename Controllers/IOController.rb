@@ -8,15 +8,17 @@ module Controllers
 			users_array = []  
 			result = true
 
-			File.open('./users.yml', 'r') do |file|
-				users_array = YAML.load(file)
-			end
+			if File.file?('./users.yml')
+				File.open('./users.yml', 'r') do |file|
+					users_array = YAML.load(file)
+				end
 
-			users_array.each do |item|
+				users_array.each do |item|
 
-				if item[:username] == user
-					result = false
-					return
+					if item[:username] == user
+						result = false
+						return
+					end
 				end
 			end
 
@@ -40,8 +42,10 @@ module Controllers
 		def self.create_user user, pass
 			users_array = [] 
 
-			File.open('./users.yml', 'r') do |file|
-				users_array = YAML.load(file)
+			if File.file?('./users.yml')
+				File.open('./users.yml', 'r') do |file|
+					users_array = YAML.load(file)
+				end
 			end
 
 			new_user_id = generate_user_id(users_array)
@@ -60,23 +64,25 @@ module Controllers
 			users_array = []
 			result = false
 
-			File.open('./users.yml', 'r') do |file|
-				users_array = YAML.load(file)
-			end
-
-			users_array.each do |item|
-
-				if user == item[:username] && pass == item[:password]
-					session_hash = {id: item[:id]}
-					result = true
-					break
+			if File.file?('./users.yml')
+				File.open('./users.yml', 'r') do |file|
+					users_array = YAML.load(file)
 				end
-			end
 
-			if result 
-				File.open('./session.yml', 'w') do |session|
-					session.puts session_hash.to_yaml
+				users_array.each do |item|
+
+					if user == item[:username] && pass == item[:password]
+						session_hash = {id: item[:id]}
+						result = true
+						break
+					end
 				end
+
+				if result 
+					File.open('./session.yml', 'w') do |session|
+						session.puts session_hash.to_yaml
+					end
+				end 
 			end
 
 			result
