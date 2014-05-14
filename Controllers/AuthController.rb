@@ -12,8 +12,8 @@ module Controllers
 			IOController.session_user_id
 		end
 
-		def self.login username, password
-			IOController.create_session  username, password
+		def self.login? username, password
+			IOController.create_session? username, password
 		end
 
 		def self.logout

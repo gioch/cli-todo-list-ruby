@@ -20,6 +20,20 @@ module Controllers
 			puts "Create Account:"
 		end
 
+		def self.not_unique_user
+			puts "User with this username allready exists!"
+		end
+
+		def self.invalid_credentials
+			puts "Error in username or password!"
+		end
+
+		def self.admin_wellcome
+			puts '+----------------------------------------------------+'
+			puts '| Wellcome To Admin Panel                            |'
+			puts '+----------------------------------------------------+'
+		end
+
 	end
 
 end

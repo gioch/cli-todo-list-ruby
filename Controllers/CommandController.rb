@@ -1,5 +1,6 @@
 require './Controllers/AuthController'
 require './Controllers/PrinterController'
+require './Controllers/UserController'
 
 module Controllers
 
@@ -14,7 +15,7 @@ module Controllers
 			case @command
 				when 'login' 
 					if AuthController.check?
-						puts "logged user id is " + AuthController.get_auth_user
+						puts "logged user id is " + AuthController.get_auth_user.to_s
 					else
 						PrinterController.login
 						PrinterController.label 'username'
@@ -22,7 +23,11 @@ module Controllers
 						PrinterController.label 'password'
 						password = get_command
 
-						AuthController.login username, password
+						if AuthController.login? username, password
+							PrinterController.admin_wellcome
+						else
+							PrinterController.invalid_credentials
+						end
 					end
 
 				when 'create'
@@ -32,9 +37,16 @@ module Controllers
 					PrinterController.label 'password'
 					password = get_command
 
-					# check if user is unique.
-					# if is -> add to users yaml, create session and return generated user_id
-					# show admin wellcome and admin command line
+					if UserController.unique? username
+						UserController.create_user username, password
+						if AuthController.login? username, password
+							PrinterController.admin_wellcome
+						else
+							PrinterController.invalid_credentials
+						end
+					else
+						PrinterController.not_unique_user
+					end
 
 				when 'logout'
 					AuthController.logout
