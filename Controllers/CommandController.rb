@@ -1,6 +1,7 @@
 require './Controllers/AuthController'
 require './Controllers/PrinterController'
 require './Controllers/UserController'
+require './Controllers/TaskController'
 
 module Controllers
 
@@ -52,7 +53,22 @@ module Controllers
 					AuthController.logout
 
 				when 'tasks'
-					puts 'All Tasks'
+					puts "User Tasks\n\n"
+
+					user_tasks = UserController.tasks
+
+					PrinterController.show_tasks user_tasks
+
+
+				when 'add'
+					puts "Add New Task\n\n"
+					puts "Task Title"
+					task_title = get_command
+
+					puts "How many days you need to finish?"
+					task_estimation_time = get_command
+
+					TaskController.create_new_task task_title, task_estimation_time
 			end
 		end
 

@@ -104,6 +104,64 @@ module Controllers
 			end
 		end
 
+		def self.get_tasks
+			auth_user_id = session_user_id
+			all_tasks = []
+			user_tasks = []
+
+			if File.file?('./tasks.yml')
+				File.open('./tasks.yml', 'r') do |file|
+					all_tasks = YAML.load(file)
+				end
+
+				all_tasks.each do |task|
+					if task[:user_id] == auth_user_id
+						user_tasks.push(task)
+					end
+				end
+			end
+
+			user_tasks
+		end
+
+		def self.new_task task_title, estimation
+
+			auth_user_id = session_user_id
+
+			all_tasks = []
+
+			if File.file?('./tasks.yml')
+				File.open('./tasks.yml', 'r') do |file|
+					all_tasks = YAML.load(file)
+				end
+			end
+
+			new_task_id = generate_task_id all_tasks
+
+			task_hash = { id: new_task_id, user_id: auth_user_id, title: task_title, due_date: estimation }
+
+			all_tasks.push(task_hash)
+
+			File.open('./tasks.yml', 'w') do |tasks|
+				tasks.puts all_tasks.to_yaml
+			end
+
+		end
+
+		def self.generate_task_id tasks_array
+
+			new_task_id = rand(99999999) 
+
+			tasks_array.each do |item|
+				if new_task_id == item[:id]
+					new_task_id = generate_task_id (tasks_array)
+					break
+				end
+			end
+ 
+			new_task_id
+		end
+
 		def self.destroy_session
 			File.delete('./session.yml')
 		end

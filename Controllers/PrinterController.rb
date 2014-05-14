@@ -34,6 +34,18 @@ module Controllers
 			puts '+----------------------------------------------------+'
 		end
 
+		def self.show_tasks tasks_array
+			
+			puts "+--------------------------------- User Tasks ---------------------------------+\n\n\n"
+
+			tasks_array.each do |task|
+				puts " #{task[:id]} - #{task[:title]} - #{task[:due_date]} \n\n"
+			end
+
+			puts "+---------------------------------            ---------------------------------+"
+
+		end
+
 	end
 
 end
