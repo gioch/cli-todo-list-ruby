@@ -3,12 +3,14 @@ require './Controllers/PrinterController'
 
 require 'yaml'
 
-commandsCtrl = Controllers::CommandController.new 
+#this is main file
+
+commands_ctrl = Controllers::CommandController.new 
 
 Controllers::PrinterController.wellcome
 
-until commandsCtrl.command == 'exit'
+until commands_ctrl.command == 'exit'
 
-	commandsCtrl.listen
+  commands_ctrl.listen
 
 end
