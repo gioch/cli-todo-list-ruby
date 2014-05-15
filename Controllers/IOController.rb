@@ -27,7 +27,7 @@ module Controllers
 
 		def self.generate_user_id users_array
 
-			new_user_id = rand(9999999) 
+			new_user_id = rand(99999999) 
 
 			users_array.each do |item|
 				if new_user_id == item[:id]

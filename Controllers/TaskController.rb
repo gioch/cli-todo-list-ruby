@@ -16,7 +16,6 @@ module Controllers
 			IOController.delete_task task_id
 		end
 
-
 	end
 
 end

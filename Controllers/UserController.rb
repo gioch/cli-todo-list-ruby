@@ -14,7 +14,7 @@ module Controllers
 		end
 
 		def self.tasks
-			TaskController.get_user_tasks
+			TaskController.get_user_tasks 
 		end
 
 	end

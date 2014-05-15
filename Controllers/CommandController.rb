@@ -11,7 +11,7 @@ module Controllers
 
 		def listen
 
-			@command = get_input_value
+			@command = get_console_input
 
 			case @command
 				when 'login' 
@@ -20,9 +20,9 @@ module Controllers
 					else
 						PrinterController.login
 						PrinterController.label 'username'
-						username = get_input_value
+						username = get_console_input
 						PrinterController.label 'password'
-						password = get_input_value
+						password = get_console_input
 
 						if AuthController.login? username, password
 							PrinterController.admin_wellcome
@@ -34,9 +34,9 @@ module Controllers
 				when 'create'
 					PrinterController.create_account
 					PrinterController.label 'username'
-					username = get_input_value
+					username = get_console_input
 					PrinterController.label 'password'
-					password = get_input_value
+					password = get_console_input
 
 					if UserController.unique? username
 						UserController.create_user username, password
@@ -62,24 +62,23 @@ module Controllers
 				when 'add'
 					PrinterController.add_task
 					PrinterController.label "Task Title"
-					task_title = get_input_value
+					task_title = get_console_input
 
 					PrinterController.label "days you need to finish?"
-					task_estimation_time = get_input_value
+					task_estimation_time = get_console_input
 
 					TaskController.create_new_task task_title, task_estimation_time
 
 				when 'delete'
 					PrinterController.label "Task Id To Delete"
-					task_id = get_input_value
+					task_id = get_console_input
 					task_id = task_id.to_i
 
 					TaskController.delete_task task_id
- 
 			end
 		end
 
-		def get_input_value
+		def get_console_input
 			gets.chomp
 		end
 	end

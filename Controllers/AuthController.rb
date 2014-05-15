@@ -17,7 +17,7 @@ module Controllers
 		end
 
 		def self.logout
-			IOController.destroy_session
+			IOController.destroy_session 
 		end
 
 	end
