@@ -1,5 +1,6 @@
 module Controllers
 
+	#Printer Controller
 	class PrinterController
 
 		def self.wellcome
