@@ -126,7 +126,6 @@ module Controllers
     end
 
     def self.new_task task_title, estimation
-
       auth_user_id = session_user_id
 
       all_tasks = []
@@ -146,7 +145,6 @@ module Controllers
       File.open('./tasks.yml', 'w') do |tasks|
         tasks.puts all_tasks.to_yaml
       end
-
     end
 
     def self.generate_task_id tasks_array
@@ -187,7 +185,6 @@ module Controllers
           tasks.puts all_tasks.to_yaml
         end
       end
-      
     end
 
     def self.destroy_session
