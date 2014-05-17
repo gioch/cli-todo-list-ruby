@@ -3,8 +3,6 @@ require './Controllers/PrinterController'
 
 require 'yaml'
 
-# Main Loop
-
 commands_ctrl = Controllers::CommandController.new 
 
 Controllers::PrinterController.wellcome

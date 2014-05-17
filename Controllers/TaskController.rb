@@ -1,7 +1,5 @@
 require './Controllers/IOController'
 
-#Task Controller
-
 module Controllers
 
 	class TaskController

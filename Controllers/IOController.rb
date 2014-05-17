@@ -1,6 +1,5 @@
 module Controllers
 
-  # Input-Output Controller
   require 'yaml'
 
   class IOController

@@ -3,8 +3,6 @@ require './Controllers/PrinterController'
 require './Controllers/UserController'
 require './Controllers/TaskController'
 
-#Command Controller
-
 module Controllers
 
   class CommandController
