@@ -8,10 +8,9 @@ module Controllers
       users_array = []  
       result = true
 
-      if File.file?('./users.yml')
-        File.open('./users.yml', 'r') do |file|
-          users_array = YAML.load(file)
-        end
+      if exists?('./users.yml')
+
+        users_array = yaml_load('./users.yml')
 
         users_array.each do |item|
 
@@ -19,6 +18,7 @@ module Controllers
             result = false
             return
           end
+
         end
       end
 
@@ -42,10 +42,10 @@ module Controllers
     def self.create_user user, pass
       users_array = [] 
 
-      if File.file?('./users.yml')
-        File.open('./users.yml', 'r') do |file|
-          users_array = YAML.load(file)
-        end
+      if exists?('./users.yml')
+
+        users_array = yaml_load('./users.yml')
+
       end
 
       new_user_id = generate_user_id(users_array)
@@ -64,10 +64,8 @@ module Controllers
       users_array = []
       result = false
 
-      if File.file?('./users.yml')
-        File.open('./users.yml', 'r') do |file|
-          users_array = YAML.load(file)
-        end
+      if exists?('./users.yml')
+        users_array = yaml_load('./users.yml')
 
         users_array.each do |item|
 
@@ -89,15 +87,15 @@ module Controllers
     end
 
     def self.session_exists?
-      File.file?('./session.yml')
+      exists?('./session.yml')
     end
 
     def self.session_user_id
       if session_exists? 
-        session_info = {}
-        File.open('./session.yml', 'r') do |session|
-          session_info = YAML.load(session)
-        end
+        session_info = []
+
+        session_info = yaml_load('./session.yml')
+ 
         session_info[:id]
       else
         -1
@@ -105,14 +103,14 @@ module Controllers
     end
 
     def self.get_tasks
-      auth_user_id = session_user_id
+      auth_user_id = session_user_id.to_i
+
       all_tasks = []
       user_tasks = []
 
-      if File.file?('./tasks.yml')
-        File.open('./tasks.yml', 'r') do |file|
-          all_tasks = YAML.load(file)
-        end
+      if exists?('./tasks.yml')
+
+        all_tasks = yaml_load('./tasks.yml')
 
         all_tasks.each do |task|
           if task[:user_id] == auth_user_id
@@ -129,10 +127,10 @@ module Controllers
 
       all_tasks = []
 
-      if File.file?('./tasks.yml')
-        File.open('./tasks.yml', 'r') do |file|
-          all_tasks = YAML.load(file)
-        end
+      if exists?('./tasks.yml')
+
+        all_tasks = yaml_load('./tasks.yml')
+
       end
 
       new_task_id = generate_task_id all_tasks
@@ -165,10 +163,9 @@ module Controllers
       index = 0
       exists = false
 
-      if File.file?('./tasks.yml')
-        File.open('./tasks.yml', 'r') do |file|
-          all_tasks = YAML.load(file)
-        end
+      if exists?('./tasks.yml')
+
+        all_tasks = yaml_load('./tasks.yml')
 
         all_tasks.each do |task|
           if task[:id] == task_id
@@ -188,6 +185,18 @@ module Controllers
 
     def self.destroy_session
       File.delete('./session.yml')
+    end
+
+    def self.exists? file_path
+       File.file?(file_path)
+    end
+
+    def self.yaml_load yaml_file_path 
+      file_content = [] 
+      File.open( yaml_file_path, 'r') do |file|
+        file_content = YAML.load(file)
+      end 
+      file_content
     end
 
   end
