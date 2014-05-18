@@ -5,13 +5,13 @@ module Controllers
   class IOController
 
     def self.user_exists? user
-      users_array = []  
+
       result = true
 
-      if exists?('./users.yml')
+      users_array = get_all_users
 
-        users_array = yaml_load('./users.yml')
-
+      if users_array.any?
+ 
         users_array.each do |item|
 
           if item[:username] == user
@@ -40,14 +40,9 @@ module Controllers
     end
 
     def self.create_user user, pass
-      users_array = [] 
 
-      if exists?('./users.yml')
-
-        users_array = yaml_load('./users.yml')
-
-      end
-
+      users_array = get_all_users  
+      
       new_user_id = generate_user_id(users_array)
 
       new_user_hash = {id: new_user_id, username: user, password: pass }
@@ -57,18 +52,18 @@ module Controllers
       File.open('./users.yml', 'w') do |file|
         file.puts users_array.to_yaml
       end
+      
     end
 
     def self.create_session? user, pass
       session_hash = {}
-      users_array = []
       result = false
 
-      if exists?('./users.yml')
-        users_array = yaml_load('./users.yml')
+      users_array = get_all_users  
+
+      if users_array.any?
 
         users_array.each do |item|
-
           if user == item[:username] && pass == item[:password]
             session_hash = {id: item[:id]}
             result = true
@@ -104,14 +99,12 @@ module Controllers
 
     def self.get_tasks
       auth_user_id = session_user_id.to_i
-
-      all_tasks = []
+ 
       user_tasks = []
 
-      if exists?('./tasks.yml')
+      all_tasks = get_all_tasks
 
-        all_tasks = yaml_load('./tasks.yml')
-
+      if all_tasks.any?
         all_tasks.each do |task|
           if task[:user_id] == auth_user_id
             user_tasks.push(task)
@@ -125,13 +118,7 @@ module Controllers
     def self.new_task task_title, estimation
       auth_user_id = session_user_id
 
-      all_tasks = []
-
-      if exists?('./tasks.yml')
-
-        all_tasks = yaml_load('./tasks.yml')
-
-      end
+      all_tasks = get_all_tasks
 
       new_task_id = generate_task_id all_tasks
 
@@ -142,6 +129,7 @@ module Controllers
       File.open('./tasks.yml', 'w') do |tasks|
         tasks.puts all_tasks.to_yaml
       end
+      
     end
 
     def self.generate_task_id tasks_array
@@ -163,9 +151,9 @@ module Controllers
       index = 0
       exists = false
 
-      if exists?('./tasks.yml')
+      all_tasks = get_all_tasks
 
-        all_tasks = yaml_load('./tasks.yml')
+      if all_tasks.any?
 
         all_tasks.each do |task|
           if task[:id] == task_id
@@ -197,6 +185,22 @@ module Controllers
         file_content = YAML.load(file)
       end 
       file_content
+    end
+
+    def self.get_all_users
+      users_array = []
+      if exists?('./users.yml')
+        users_array = yaml_load('./users.yml')
+      end
+      users_array
+    end
+
+    def self.get_all_tasks
+      all_tasks = []
+      if exists?('./tasks.yml')
+        all_tasks = yaml_load('./tasks.yml')
+      end
+      all_tasks
     end
 
   end
