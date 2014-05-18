@@ -49,10 +49,12 @@ module Controllers
 
       users_array.push(new_user_hash)
 
-      File.open('./users.yml', 'w') do |file|
-        file.puts users_array.to_yaml
-      end
-      
+      yaml_write('./users.yml', users_array)
+
+      # File.open('./users.yml', 'w') do |file|
+      #   file.puts users_array.to_yaml
+      # end
+
     end
 
     def self.create_session? user, pass
@@ -72,9 +74,12 @@ module Controllers
         end
 
         if result 
-          File.open('./session.yml', 'w') do |session|
-            session.puts session_hash.to_yaml
-          end
+
+          yaml_write('./session.yml', session_hash)
+
+          # File.open('./session.yml', 'w') do |session|
+          #   session.puts session_hash.to_yaml
+          # end
         end 
       end
 
@@ -126,9 +131,11 @@ module Controllers
 
       all_tasks.push(task_hash)
 
-      File.open('./tasks.yml', 'w') do |tasks|
-        tasks.puts all_tasks.to_yaml
-      end
+      yaml_write('./tasks.yml', all_tasks)
+
+      # File.open('./tasks.yml', 'w') do |tasks|
+      #   tasks.puts all_tasks.to_yaml
+      # end
       
     end
 
@@ -165,9 +172,11 @@ module Controllers
 
         all_tasks.slice!(index)
 
-        File.open('./tasks.yml', 'w') do |tasks|
-          tasks.puts all_tasks.to_yaml
-        end
+        yaml_write('./tasks.yml', all_tasks)
+
+        # File.open('./tasks.yml', 'w') do |tasks|
+        #   tasks.puts all_tasks.to_yaml
+        # end
       end
     end
 
@@ -201,6 +210,12 @@ module Controllers
         all_tasks = yaml_load('./tasks.yml')
       end
       all_tasks
+    end
+
+    def self.yaml_write yaml_file_path, data
+      File.open( yaml_file_path, 'w' ) do |file|
+        file.puts data.to_yaml
+      end
     end
 
   end
