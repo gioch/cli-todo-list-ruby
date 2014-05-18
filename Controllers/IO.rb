@@ -2,7 +2,7 @@ module Controllers
 
   require 'yaml'
 
-  class IOController
+  class IO
 
     USER_YAML_FILE = './users.yml'
     SESSION_YAML_FILE = './session.yml'

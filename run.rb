@@ -1,11 +1,11 @@
-require './Controllers/CommandController'
-require './Controllers/PrinterController'
+require './Controllers/Command'
+require './Controllers/Printer'
 
 require 'yaml'
 
-commands_ctrl = Controllers::CommandController.new 
+commands_ctrl = Controllers::Command.new 
 
-Controllers::PrinterController.wellcome
+Controllers::Printer.wellcome
 
 until commands_ctrl.command == 'exit'
 

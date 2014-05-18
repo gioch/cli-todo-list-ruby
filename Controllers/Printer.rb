@@ -1,6 +1,6 @@
 module Controllers
 
-  class PrinterController
+  class Printer
 
     def self.wellcome
       puts '+----------------------------------------------------+'
